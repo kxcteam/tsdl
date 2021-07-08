@@ -3024,8 +3024,11 @@ module Event : sig
 
   (** {3 {{:http://wiki.libsdl.org/SDL_UserEvent}SDL_UserEvent} fields} *)
 
+  val user_timestamp : int32 field
   val user_window_id : int field
   val user_code : int field
+  val user_data1 : nativeint field
+  val user_data2 : nativeint field
 
   (** {2:display Display events} *)
 

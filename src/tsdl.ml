@@ -78,6 +78,9 @@ let string_as_char_array n = (* FIXME: drop this if ctypes proposes better *)
   in
   view ~read ~write n_array
 
+let nativeint_as_raw_address =
+  view ~read:raw_address_of_ptr ~write:ptr_of_raw_address (ptr void)
+
 let get_error =
   foreign "SDL_GetError" (void @-> returning string)
 
@@ -4015,11 +4018,11 @@ module Event = struct
     type t
     let t : t structure typ = structure "SDL_UserEvent"
     let _ = field t "type" int_as_uint32_t
-    let _ = field t "timestamp" int32_as_uint32_t
+    let timestamp = field t "timestamp" int32_as_uint32_t
     let window_id = field t "windowID" int_as_uint32_t
     let code = field t "code" int_as_int32_t
-    let _ = field t "data1" (ptr void)
-    let _ = field t "data2" (ptr void)
+    let data1 = field t "data1" nativeint_as_raw_address
+    let data2 = field t "data2" nativeint_as_raw_address
     let () = seal t
   end
 
@@ -4315,8 +4318,11 @@ module Event = struct
 
   (* User events *)
 
+  let user_timestamp = F (user_event, User_event.timestamp)
   let user_window_id = F (user_event, User_event.window_id)
   let user_code = F (user_event, User_event.code)
+  let user_data1 = F (user_event, User_event.data1)
+  let user_data2 = F (user_event, User_event.data2)
   let user_event = sdl_userevent
 
   (* Window events *)

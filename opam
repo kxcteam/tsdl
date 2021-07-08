@@ -1,4 +1,5 @@
 opam-version: "2.0"
+synopsis: "Tsdl - Thin bindings to SDL for OCaml"
 maintainer: "Daniel Bünzli <daniel.buenzl i@erratique.ch>"
 authors: ["The tsdl programmers"]
 homepage: "https://erratique.ch/software/tsdl"
